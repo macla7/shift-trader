@@ -28,4 +28,7 @@ Things you may want to cover:
   <li>Add action_mailer for devise to production environment</li>
   <li>Food for thought for later, do I want a seperate phone number model for Users if I want to require phone number verification during registration <a href="https://stackoverflow.com/questions/32129608/adding-phone-number-to-user-model">here</a>.</li>
   <li>Used this guide for requsts <a href="https://hackernoon.com/how-to-create-a-friendship-relation-on-rails-c01d3u4v">here</a> which was super handy.</li>
+  <li>FROM ODIN-FACEBOOK PROJECT - >Seem to have got working the credentials.yml.enc file in config folder. When you use Vscode as an editor, you have to access it a bit of a funky way.. Like so -> 'EDITOR="code --wait" bin/rails credentials:edit'.</li>
+  <li>TO come back to the websockets for a multitude of things.. Green circle next to user to show online. But also, this phone business from twilio..</li>
+  <li>Twilio used these docs and accompaning git clone to work off <a href="https://www.twilio.com/docs/verify/quickstarts/ruby-rails">here</a></li>
 </ul>

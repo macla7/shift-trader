@@ -9,13 +9,16 @@
   </div>
 
   <div class="field">
-    <%= f.label :country_code %><br />
-    <%= f.text_field :country_code %>
+    <%= f.label :phone_number %>
+    <%= f.text_field :phone_number, type: 'tel' %>
+    <%#= f.label :displayed_phone_number %>
+    <%#= f.text_field :displayed_phone_number, type: 'tel' %>
   </div>
 
   <div class="field">
-    <%= f.label :phone_number %><br />
-    <%= f.phone_field :phone_number %>
+    <label for="channel">Verification Method</label>
+    <label><input type="radio" name="channel" value="sms" checked>SMS</label>
+    <label><input type="radio" name="channel" value="voice">Call</label>
   </div>
 
   <div class="field">
@@ -42,3 +45,11 @@
 <% end %>
 
 <%= render "devise/shared/links" %>
+
+<script>
+  var input = document.querySelector("#user_displayed_phone_number");
+  window.intlTelInput(input, {
+    hiddenInput: "phone_number",
+    preferredCountries: ["us", "gb", "co", "de"]
+  });
+</script>

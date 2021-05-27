@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
   before_action :authenticate_user!
+  before_action :set_client, only: [:create, :verify]
+  before_action :current_user, only: [:verify]
 
   # GET /users or /users.json
   def index
@@ -22,11 +24,14 @@ class UsersController < ApplicationController
 
   # POST /users or /users.json
   def create
-    @user = User.new(user_params)
+    channel = user_params['channel']
+    @user = User.new(user_params.except('channel', 'displayed_phone_number'))
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: "User was successfully created." }
+        start_verification(@user.phone_number, channel)
+        session[:user_id] = @user.id
+        format.html { redirect_to verify_url, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -57,14 +62,51 @@ class UsersController < ApplicationController
     end
   end
 
+  def verify
+    if request.post?
+      is_verified = check_verification(@current_user.phone_number, params['verification_code'])
+      if is_verified
+        @current_user.verified = true
+        @current_user.save
+        respond_to do |format|
+          format.html { redirect_to users_url, notice: 'User was successfully verified.' }
+        end
+      else
+        respond_to do |format|
+          format.html { redirect_to verify_url, notice: 'The code was invalid.' }
+        end
+      end
+    else
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
     end
 
+    def set_client
+      @client = Twilio::REST::Client.new(Rails.application.credentials.twilio[:ACCOUNT_SID], Rails.application.credentials.twilio[:AUTH_TOKEN])
+    end
+
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:name, :country_code, :phone_number)
+      params.require(:user).permit(:name, :password, :password_confirmation, :phone_number)
+    end
+
+    def start_verification(to, channel='sms')
+      channel = 'sms' unless ['sms', 'voice'].include? channel
+      verification = @client.verify.services(Rails.application.credentials.twilio[:VERIFICATION_SID])
+                                   .verifications
+                                   .create(:to => to, :channel => channel)
+      return verification.sid
+    end
+
+    def check_verification(phone, code)
+      verification_check = @client.verify.services(Rails.application.credentials.twilio[:VERIFICATION_SID])
+                                         .verification_checks
+                                         .create(:to => phone, :code => code)
+      return verification_check.status == 'approved'
     end
 end
