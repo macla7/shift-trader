@@ -10,6 +10,6 @@ RSpec.describe 'Creating User - No Phone', type: :feature do
     fill_in 'Password confirmation', with: 'Bing111'
     click_on 'Sign up'
     visit users_path
-    expect(page).to have_content('Bonk')
+    expect(page).to have_content('bonk@glomail.com')
   end
 end
