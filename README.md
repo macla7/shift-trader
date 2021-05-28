@@ -23,7 +23,7 @@ Things you may want to cover:
 
 * ...
 
-<h2>Things to do:</h2>
+<h2>Things to down the line:</h2>
 <ul>
   <li>Add action_mailer for devise to production environment</li>
   <li>Food for thought for later, do I want a seperate phone number model for Users if I want to require phone number verification during registration <a href="https://stackoverflow.com/questions/32129608/adding-phone-number-to-user-model">here</a>.</li>
@@ -31,4 +31,12 @@ Things you may want to cover:
   <li>FROM ODIN-FACEBOOK PROJECT - >Seem to have got working the credentials.yml.enc file in config folder. When you use Vscode as an editor, you have to access it a bit of a funky way.. Like so -> 'EDITOR="code --wait" bin/rails credentials:edit'.</li>
   <li>TO come back to the websockets for a multitude of things.. Green circle next to user to show online. But also, this phone business from twilio..</li>
   <li>Twilio used these docs and accompaning git clone to work off <a href="https://www.twilio.com/docs/verify/quickstarts/ruby-rails">here</a></li>
+</ul>
+
+
+<h2>Current Problems to be fixed</h2>
+
+<ul>
+  <li>Seemed to have broken omniauth for the moment.. Fix this now.</li>
+  <li>Will come back to facebook permissions with phone and avatar (profile pic).</li>
 </ul>

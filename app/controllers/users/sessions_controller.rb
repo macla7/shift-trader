@@ -10,12 +10,19 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
-    super
-    user = User.find_by_name(params[:name])
-    if user && user.authenticate(params[:password]) && user.verified
-      session[:user_id] = user.id
+    # Devise default method code..
+    self.resource = warden.authenticate!(auth_options)
+    set_flash_message!(:notice, :signed_in)
+    sign_in(resource_name, resource)
+    yield resource if block_given?
+    # respond_with resource, location: after_sign_in_path_for(resource)
+
+    # Twilio's code example..
+    if resource && resource.verified
+      session[:user_id] = resource.id
       redirect_to root_url, notice: "Logged in!"
-    elsif user && user.authenticate(params[:password])
+    elsif resource
+      session[:user_id] = resource.id
       redirect_to verify_url, notice: "You are not verified"
     else
       flash.now[:alert] = "Email or password is invalid"

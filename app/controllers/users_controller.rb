@@ -66,6 +66,7 @@ class UsersController < ApplicationController
     if request.post?
       is_verified = check_verification(@current_user.phone_number, params['verification_code'])
       if is_verified
+        puts 'am i verified already eh'
         @current_user.verified = true
         @current_user.save
         respond_to do |format|
