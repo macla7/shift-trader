@@ -39,4 +39,6 @@ Things you may want to cover:
 <ul>
   <li>Seemed to have broken omniauth for the moment.. Fix this now.</li>
   <li>Will come back to facebook permissions with phone and avatar (profile pic).</li>
+  <li>SO want to be able to make user without phone, only email necessary, cause this is all facebook will give me at this point lol. <ahref="https://developers.facebook.com/docs/permissions/reference">link</a>.</li>
+  <li>need to do something about phone uniqueness....</li>
 </ul>

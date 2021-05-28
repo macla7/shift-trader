@@ -10,7 +10,6 @@ class User < ApplicationRecord
   has_many :sent_requests, -> { where confirmed: false }, class_name: 'Request', foreign_key: 'user_id'
 
   validates :name, presence: true, uniqueness: true
-  validates :phone_number, presence: true, uniqueness: true
 
   # NOT SURE WHAT DOES. Remove if not necessary, as don't use what you don't know..
   def to_json(options={})
