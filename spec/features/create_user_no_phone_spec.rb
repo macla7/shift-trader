@@ -1,5 +1,5 @@
 
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe 'Creating User - No Phone', type: :feature do
   scenario 'valid inputs' do
