@@ -41,4 +41,10 @@ Things you may want to cover:
   <li>Will come back to facebook permissions with phone and avatar (profile pic).</li>
   <li>SO want to be able to make user without phone, only email necessary, cause this is all facebook will give me at this point lol. <ahref="https://developers.facebook.com/docs/permissions/reference">link</a>.</li>
   <li>need to do something about phone uniqueness....</li>
+  <li>Figure out issue with facebook profile and editing user..</li>
+</ul>
+
+<h2>Errors fixed and brief on how</h2>
+<ul>
+  <li>Omniauth broke after users got telephone. Just needed to make sure telephone wasn't required</li>
 </ul>
