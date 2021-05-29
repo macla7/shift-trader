@@ -53,11 +53,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
     p resource
     puts resource
     puts 'bye'
+
     self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
     prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
     channel = params['channel']
     resource.verified = false
     resource_updated = update_resource(resource, account_update_params)
+
     yield resource if block_given?
     if resource_updated
       set_flash_message_for_update(resource, prev_unconfirmed_email)
@@ -93,6 +95,31 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   protected
+
+  def update_resource(resource, params)
+    if resource.oauth_registered_only
+      puts 'hi'
+      p resource
+      p params
+      puts 'retreat'
+      if params[:email] && !params[:password].blank? && params[:password] == params[:password_confirmation]
+        resource.email = params[:email]
+        logger.info "Updating password"
+        resource.password = params[:password]
+        resource.oauth_registered_only = false
+        if resource.save
+          clean_up_passwords(resource)
+          return true
+        else
+          return false
+        end
+      else
+        return false
+      end
+    else
+      resource.update_with_password(params)
+    end
+  end
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params

@@ -34,17 +34,20 @@ Things you may want to cover:
 </ul>
 
 
-<h2>Current Problems to be fixed</h2>
 
-<ul>
-  <li>Seemed to have broken omniauth for the moment.. Fix this now.</li>
-  <li>Will come back to facebook permissions with phone and avatar (profile pic).</li>
-  <li>SO want to be able to make user without phone, only email necessary, cause this is all facebook will give me at this point lol. <ahref="https://developers.facebook.com/docs/permissions/reference">link</a>.</li>
-  <li>need to do something about phone uniqueness....</li>
-  <li>Figure out issue with facebook profile and editing user..</li>
-</ul>
 
 <h2>Errors fixed and brief on how</h2>
 <ul>
   <li>Omniauth broke after users got telephone. Just needed to make sure telephone wasn't required</li>
+  <li>Solved phone uniqueness directly on the database, so that it can also be nil. This means when a user signs up, they don't HAVE to give their phone number.. but it will be impossible to verify themselves without one..</li>
+  <li>Used this guide <a href="https://github.com/omniauth/omniauth/wiki/Managing-Multiple-Providers">here</a>, and a few others similar to it to sort out having multiple ways to identify (or authenticate). Essentially made an Identify model with belongs_to User. This then can word in 3 ways. Identify model can be linked to User when already logged in. Can be used to log in. Can be used to sign up.</li>
+</ul>
+
+
+<h2>Current Problems to be fixed</h2>
+
+<ul>
+  <li>Will come back to facebook permissions with phone and avatar (profile pic).</li>
+  <li>SO want to be able to make user without phone, only email necessary, cause this is all facebook will give me at this point lol. <ahref="https://developers.facebook.com/docs/permissions/reference">link</a>.</li>
+  <li>Figure out issue with facebook profile and editing user..</li>
 </ul>
