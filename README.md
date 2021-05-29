@@ -41,6 +41,7 @@ Things you may want to cover:
   <li>Omniauth broke after users got telephone. Just needed to make sure telephone wasn't required</li>
   <li>Solved phone uniqueness directly on the database, so that it can also be nil. This means when a user signs up, they don't HAVE to give their phone number.. but it will be impossible to verify themselves without one..</li>
   <li>Used this guide <a href="https://github.com/omniauth/omniauth/wiki/Managing-Multiple-Providers">here</a>, and a few others similar to it to sort out having multiple ways to identify (or authenticate). Essentially made an Identify model with belongs_to User. This then can word in 3 ways. Identify model can be linked to User when already logged in. Can be used to log in. Can be used to sign up.</li>
+  <li>Followed bottom of <a href="https://www.reddit.com/r/rails/comments/5eufg4/devise_and_omniauth_set_password_after/">this</a> post for setting a user's password, after they've intially signed up with an omniauth method. This way they can then re log back in with email and password.</li>
 </ul>
 
 
