@@ -9,12 +9,18 @@ class User < ApplicationRecord
   has_many :pending_requests, -> { where accepted: false }, class_name: 'Request', foreign_key: "friend_id"
   has_many :sent_requests, -> { where confirmed: false }, class_name: 'Request', foreign_key: 'user_id'
 
+  has_many :identities, dependent: :destroy
+
   validates :name, presence: true, uniqueness: true
 
   # NOT SURE WHAT DOES. Remove if not necessary, as don't use what you don't know..
   def to_json(options={})
     options[:except] ||= [:verified]
     super(options)
+  end
+
+  def self.create_with_omniauth(info)
+    create(name: info['name'])
   end
 
   # From Omniauth guide
