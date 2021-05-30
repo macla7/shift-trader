@@ -11,7 +11,7 @@ class User < ApplicationRecord
 
   has_many :identities, dependent: :destroy
 
-  has_many :invites
+  has_many :invites, foreign_key: 'invitor_id'
   has_many :pending_invites, -> { where confirmed: false }, class_name: 'Invite', foreign_key: 'invitee_id'
 
   has_many :user_groups, foreign_key: 'host_id'
@@ -62,8 +62,14 @@ class User < ApplicationRecord
   end
 
   # 3 Methods above EXCEPT modified for Invite model
-  def send_invite(user)
-    invites.create(invitee_id: user.id)
+  def send_invite(user, group)
+    invites.new(invitee_id: user.id, group_id: group.id)
   end
+
+  def recieved_invite_from_group(group)
+    pending_invites.where(group_id: group.id)
+  end
+
+
   
 end

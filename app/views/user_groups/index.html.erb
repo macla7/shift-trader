@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>User Groups</h1>
+<h1>Workplaces</h1>
 
 <table>
   <thead>
@@ -17,8 +17,6 @@
         <td><%= user_group.name %></td>
         <td><%= user_group.host.name %></td>
         <td><%= link_to 'Show', user_group %></td>
-        <td><%= link_to 'Edit', edit_user_group_path(user_group) %></td>
-        <td><%= link_to 'Destroy', user_group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +24,4 @@
 
 <br>
 
-<%= link_to 'New User Group', new_user_group_path %>
+<%= link_to 'New Workplace', new_user_group_path %>

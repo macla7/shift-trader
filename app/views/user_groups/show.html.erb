@@ -1,17 +1,51 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Workplace:</strong>
-  <%= @user_group.name %>
+  <h1>Workplace: <%= @user_group.name %></h1>
 </p>
 
 <p>
-  <strong>Host Details:</strong>
+  <h3>Host Details:</h3>
   <ul>
     <li>Name: <%= @user_group.host.name %></li>
     <li>Email: <%= @user_group.host.email %></li>
   </ul>
 </p>
 
-<%= link_to 'Edit', edit_user_group_path(@user_group) %> |
+<!-- Invite section -->
+<% if @user_group.host_id == session[:user_id] %>
+  <h3>Invite Co-Workers</h3>
+  <%= form_with url: '/invites', method: :post, scope: 'invite' do |form| %>
+    <%= form.label :email %>
+    <%= form.text_field :email %>
+    <%= form.hidden_field :invitor_id, value: current_user.id %>
+    <%= form.hidden_field :group_id, value: @user_group.id %>
+    <%= form.submit 'Invite' %>
+  <% end %>
+  
+<% end %>
+
+<!--List Co-workers section -->
+<h3>Co-Workers in Group</h3>
+<ul>
+  <% @user_group.confirmed.each do |a| %>
+    <li><%= a.worker.name %></li>
+  <% end %>
+</ul>
+
+<!-- Group Actions -->
+<% if @user_group.host_id == session[:user_id] %>
+  <%= link_to 'Destroy', @user_group, method: :delete, data: { confirm: 'Are you sure?' } %>
+  <%= link_to 'Edit', edit_user_group_path(@user_group) %>
+<% else %>
+  <% if !current_user.recieved_invite_from_group(@user_group).empty? %>
+    <%= button_to "Accept Invite", invite_path(current_user.recieved_invite_from_group(@user_group).first), method: :put, params: { invite: { group_id: @user_group.id } } %>
+  <% elsif current_user.user_groups.where(group_id: @user_group.id) %>
+    <!-- Need to touch this up -->
+    <%= button_to "Leave Group" %>
+  <% else %>
+    <%= button_to "Request to Join", invites_path, params: { invite: { group_id: @user_group.id }} %>
+  <% end %>
+<% end %>
+
 <%= link_to 'Back', user_groups_path %>

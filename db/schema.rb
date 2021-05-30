@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_30_022201) do
+ActiveRecord::Schema.define(version: 2021_05_30_072717) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,13 +23,13 @@ ActiveRecord::Schema.define(version: 2021_05_30_022201) do
   end
 
   create_table "invites", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.bigint "invitor_id", null: false
     t.integer "invitee_id"
-    t.integer "group"
+    t.integer "group_id"
     t.boolean "confirmed", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_invites_on_user_id"
+    t.index ["invitor_id"], name: "index_invites_on_invitor_id"
   end
 
   create_table "requests", force: :cascade do |t|
@@ -68,6 +68,6 @@ ActiveRecord::Schema.define(version: 2021_05_30_022201) do
   end
 
   add_foreign_key "identities", "users"
-  add_foreign_key "invites", "users"
+  add_foreign_key "invites", "users", column: "invitor_id"
   add_foreign_key "requests", "users"
 end
