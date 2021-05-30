@@ -16,9 +16,12 @@
     <%= form.text_field :name %>
   </div>
 
+  <% puts 'hi'%>
+  <% p current_user%>
+  <% puts 'bye'%>
+
   <div class="field">
-    <%= form.label :host %>
-    <%= form.number_field :host %>
+    <%= form.hidden_field :host_id , value: current_user.id %>
   </div>
 
   <div class="actions">

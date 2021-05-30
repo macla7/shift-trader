@@ -1,5 +1,6 @@
 class UserGroupsController < ApplicationController
   before_action :set_user_group, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
 
   # GET /user_groups or /user_groups.json
   def index
@@ -64,6 +65,6 @@ class UserGroupsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_group_params
-      params.require(:user_group).permit(:name, :host)
+      params.require(:user_group).permit(:name, :host_id)
     end
 end

@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks', registrations: 'users/registrations', sessions: 'users/sessions'}
+
   resources :user_groups
   resources :invites
-  resources :users
   root to: 'user_groups#index'
-
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks', registrations: 'users/registrations', sessions: 'users/sessions'}
+  resources :users
   devise_scope :user do
     match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
   end
