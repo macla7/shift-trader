@@ -7,13 +7,19 @@ class InvitesController < ApplicationController
     if params['invite']['email']
       invitee = User.find_by(email: params['invite']['email'])
     else
-      invitee = user_group.host
+      invitee = user_group.host  
     end
 
-    @invite = current_user.send_invite(invitee, user_group)
-    
-    @invite.save!
-    redirect_to user_groups_path(params['invite']['group_id'])
+    if !Invite.self_invited(user_group).where(invitor_id: invitee.id).empty? && params['invite']['email']
+      # Maybe some day, just accept this request straight up.
+      redirect_to user_group_path(user_group), notice: "They've already requested to join!"
+    elsif !Invite.invited(user_group).where(invitee_id: invitee.id).empty?
+      redirect_to user_group_path(user_group), notice: "Request Pending!"
+    else
+      @invite = current_user.send_invite(invitee, user_group).save!
+      redirect_to user_group_path(user_group), notice: "Invited #{invitee.name}!"
+    end
+
   end
 
   def update

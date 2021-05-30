@@ -3,6 +3,9 @@ class Invite < ApplicationRecord
   belongs_to :invitor, class_name: 'User', inverse_of: 'invites'
   belongs_to :invitee, class_name: 'User'
 
+  scope :unconfirmed_requested, -> { where(confirmed: false) }
+  scope :self_invited, -> (user_group) { where("invitee_id = ?", user_group.host_id).where(confirmed: false)}
+  scope :invited, -> (user_group) { where("invitor_id = ?", user_group.host_id).where(confirmed: false)}
   # Method in here to find the actual non-host on Invite.
   def worker
     host = user_group.host
@@ -12,4 +15,8 @@ class Invite < ApplicationRecord
       invitor
     end
   end
+
+  # def self.self_invited(user_group)
+  #   where(invitee_id: user_group.host_id, confirmed: false)
+  # end
 end

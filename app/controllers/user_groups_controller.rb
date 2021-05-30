@@ -23,9 +23,10 @@ class UserGroupsController < ApplicationController
   # POST /user_groups or /user_groups.json
   def create
     @user_group = UserGroup.new(user_group_params)
+    @invite = Invite.new(invitor: current_user, invitee: current_user, user_group: @user_group, confirmed: true)
 
     respond_to do |format|
-      if @user_group.save
+      if @user_group.save && @invite.save
         format.html { redirect_to @user_group, notice: "User group was successfully created." }
         format.json { render :show, status: :created, location: @user_group }
       else

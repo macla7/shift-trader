@@ -22,7 +22,14 @@
     <%= form.hidden_field :group_id, value: @user_group.id %>
     <%= form.submit 'Invite' %>
   <% end %>
-  
+  <% if !Invite.self_invited(@user_group).empty? %>
+    <h3>People Requesting to Joing the Group</h3>
+    <ul>
+      <% Invite.self_invited(@user_group).each do |invite| %>
+        <li><%= invite.invitor.name %></li>
+      <% end %>
+    </ul>
+  <% end %>
 <% end %>
 
 <!--List Co-workers section -->
