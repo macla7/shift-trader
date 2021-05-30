@@ -7,9 +7,14 @@ class User < ApplicationRecord
 
   has_many :requests
   has_many :pending_requests, -> { where accepted: false }, class_name: 'Request', foreign_key: "friend_id"
-  has_many :sent_requests, -> { where confirmed: false }, class_name: 'Request', foreign_key: 'user_id'
+  has_many :sent_requests, -> { where accepted: false }, class_name: 'Request', foreign_key: 'user_id'
 
   has_many :identities, dependent: :destroy
+
+  has_many :invites
+  has_many :pending_invites, -> { where confirmed: false }, class_name: 'Invite', foreign_key: 'invitee_id'
+
+  has_many :user_groups, foreign_key: 'host_id'
 
   validates :name, presence: true, uniqueness: true
 
@@ -19,6 +24,7 @@ class User < ApplicationRecord
     super(options)
   end
 
+  # Omniauth custom method from user guide
   def self.create_with_omniauth(info)
     create(name: info['name'])
   end
@@ -53,6 +59,11 @@ class User < ApplicationRecord
   # 3.
   def send_request(user)
     requests.create(friend_id: user.id)
+  end
+
+  # 3 Methods above EXCEPT modified for Invite model
+  def send_invite(user)
+    invites.create(invitee_id: user.id)
   end
   
 end
