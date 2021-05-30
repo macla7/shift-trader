@@ -14,44 +14,44 @@ class UsersController < ApplicationController
   end
 
   # GET /users/new
-  def new
-    @user = User.new
-  end
-
-  # GET /users/1/edit
-  def edit
-  end
-
-  # POST /users or /users.json
-  def create
-    channel = user_params['channel']
-    @user = User.new(user_params.except('channel', 'displayed_phone_number'))
-
-    respond_to do |format|
-      if @user.save
-        start_verification(@user.phone_number, channel)
-        session[:user_id] = @user.id
-        format.html { redirect_to verify_url, notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  # def new
+  #   @user = User.new
+  # end
+# 
+  # # GET /users/1/edit
+  # def edit
+  # end
+# 
+  # # POST /users or /users.json
+  # def create
+  #   channel = user_params['channel']
+  #   @user = User.new(user_params.except('channel', 'displayed_phone_number'))
+# 
+  #   respond_to do |format|
+  #     if @user.save
+  #       start_verification(@user.phone_number, channel)
+  #       session[:user_id] = @user.id
+  #       format.html { redirect_to verify_url, notice: 'User was successfully created.' }
+  #       format.json { render :show, status: :created, location: @user }
+  #     else
+  #       format.html { render :new, status: :unprocessable_entity }
+  #       format.json { render json: @user.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   # PATCH/PUT /users/1 or /users/1.json
-  def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: "User was successfully updated." }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  # def update
+  #   respond_to do |format|
+  #     if @user.update(user_params)
+  #       format.html { redirect_to @user, notice: "User was successfully updated." }
+  #       format.json { render :show, status: :ok, location: @user }
+  #     else
+  #       format.html { render :edit, status: :unprocessable_entity }
+  #       format.json { render json: @user.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   # DELETE /users/1 or /users/1.json
   def destroy
