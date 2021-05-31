@@ -17,16 +17,16 @@ class UsersController < ApplicationController
   # def new
   #   @user = User.new
   # end
-# 
+
   # # GET /users/1/edit
   # def edit
   # end
-# 
+ 
   # # POST /users or /users.json
   # def create
   #   channel = user_params['channel']
   #   @user = User.new(user_params.except('channel', 'displayed_phone_number'))
-# 
+  # 
   #   respond_to do |format|
   #     if @user.save
   #       start_verification(@user.phone_number, channel)
@@ -66,7 +66,6 @@ class UsersController < ApplicationController
     if request.post?
       is_verified = check_verification(@current_user.phone_number, params['verification_code'])
       if is_verified
-        puts 'am i verified already eh'
         @current_user.verified = true
         @current_user.save
         respond_to do |format|

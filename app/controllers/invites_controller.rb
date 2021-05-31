@@ -27,7 +27,6 @@ class InvitesController < ApplicationController
 
     @invite.confirmed = true
     if @invite.update(invite_params)
-      p @invite
       redirect_to user_group_path(user_group), notice: 'Invite accepted!'
     else
       redirect_to user_group_path(user_group), notice: 'Invite failed to accept..'

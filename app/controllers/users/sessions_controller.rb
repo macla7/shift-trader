@@ -21,9 +21,12 @@ class Users::SessionsController < Devise::SessionsController
     if resource && resource.verified
       session[:user_id] = resource.id
       redirect_to root_url, notice: "Logged in!"
+    elsif resource && !resource.phone_number.nil?
+      session[:user_id] = resource.id
+      redirect_to verify_url, notice: "Your phone number is not verified"
     elsif resource
       session[:user_id] = resource.id
-      redirect_to verify_url, notice: "You are not verified"
+      redirect_to root_url, notice: "Please add a phone number to access more featuers."
     else
       flash.now[:alert] = "Email or password is invalid"
       render "new"

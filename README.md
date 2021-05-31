@@ -51,6 +51,7 @@ Things you may want to cover:
   <li>Adding accepting Invites from other users (when logged in as host)</li>
   <li>Adding accept invites to groups as a User.. Atm just thinking on the workplace index.</li>
   <li>Should make request to join button inacitve.</li>
+  <li>Not duplicating on already accepted invites</li>
 </ul>
 
 
