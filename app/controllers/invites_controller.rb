@@ -17,18 +17,20 @@ class InvitesController < ApplicationController
       redirect_to user_group_path(user_group), notice: "Request Pending!"
     else
       @invite = current_user.send_invite(invitee, user_group).save!
-      redirect_to user_group_path(user_group), notice: "Invited #{invitee.name}!"
+      redirect_to user_group_path(user_group), notice: "Request Sent!"
     end
 
   end
 
   def update
+    user_group = UserGroup.find_by(id: params['invite']['group_id'])
+
     @invite.confirmed = true
     if @invite.update(invite_params)
       p @invite
-      redirect_to user_groups_path(params['group_id']), notice: 'Invite accepted!'
+      redirect_to user_groups_path(user_group), notice: 'Invite accepted!'
     else
-      redirect_to user_groups_path(params['group_id']), notice: 'Invite failed to accept..'
+      redirect_to user_groups_path(user_group), notice: 'Invite failed to accept..'
     end
   end
 

@@ -27,6 +27,7 @@
     <ul>
       <% Invite.self_invited(@user_group).each do |invite| %>
         <li><%= invite.invitor.name %></li>
+        <%= button_to "Accept Request", invite_path(invite), method: :put, params: { invite: { group_id: @user_group.id } } %>
       <% end %>
     </ul>
   <% end %>
@@ -47,7 +48,7 @@
 <% else %>
   <% if !current_user.recieved_invite_from_group(@user_group).empty? %>
     <%= button_to "Accept Invite", invite_path(current_user.recieved_invite_from_group(@user_group).first), method: :put, params: { invite: { group_id: @user_group.id } } %>
-  <% elsif current_user.user_groups.where(group_id: @user_group.id) %>
+  <% elsif !current_user.user_groups.where(id: @user_group.id).empty? %>
     <!-- Need to touch this up -->
     <%= button_to "Leave Group" %>
   <% else %>

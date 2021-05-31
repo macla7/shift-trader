@@ -15,6 +15,7 @@
     <p class="alert"><%= alert %></p>
 
     <% if user_signed_in? %>
+      <h4>You are Logged in as <%= current_user.name %>.</h4>
       <%= button_to "Logout", destroy_user_session_path, method: :delete %>
       <%= button_to "Link Facebook account", user_facebook_omniauth_authorize_path %>
       <%= button_to "Users Search", users_path, method: :get %>
