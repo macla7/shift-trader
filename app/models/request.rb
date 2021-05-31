@@ -19,7 +19,7 @@ class Request < ApplicationRecord
     case1 || case2
   end
 
-  # 3.
+  # 3. Possibly better off shifting to User model..
   def self.got_any_requests?(id1)
     Request.where(friend_id: id1, accepted: false)
   end

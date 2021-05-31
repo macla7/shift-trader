@@ -5,24 +5,29 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   devise :omniauthable, omniauth_providers: %i[facebook]
 
+  # Request
   has_many :requests
-  has_many :pending_requests, -> { where accepted: false }, class_name: 'Request', foreign_key: "friend_id"
-  has_many :sent_requests, -> { where accepted: false }, class_name: 'Request', foreign_key: 'user_id'
+  has_many :my_rec_requests, -> { where accepted: false }, class_name: 'Request', foreign_key: "friend_id"
+  has_many :my_sent_requests, -> { where accepted: false }, class_name: 'Request', foreign_key: 'user_id'
 
+  # Identity
   has_many :identities, dependent: :destroy
 
-  has_many :invites, foreign_key: 'invitor_id'
-  has_many :pending_invites, -> { where confirmed: false }, class_name: 'Invite', foreign_key: 'invitee_id'
+  # Invite
+  has_many :my_sent_invites, foreign_key: 'invitor_id', class_name: 'Invite'
+  has_many :my_rec_invites, -> { where confirmed: false }, class_name: 'Invite', foreign_key: 'invitee_id'
 
+  # UserGroup
   has_many :user_groups, foreign_key: 'host_id'
 
+  # Validations
   validates :name, presence: true, uniqueness: true
 
-  # NOT SURE WHAT DOES. Remove if not necessary, as don't use what you don't know..
-  def to_json(options={})
-    options[:except] ||= [:verified]
-    super(options)
-  end
+  # Come from Twilio example clone, not in use.
+  # def to_json(options={})
+  #   options[:except] ||= [:verified]
+  #   super(options)
+  # end
 
   # Omniauth custom method from user guide
   def self.create_with_omniauth(info)
@@ -63,13 +68,10 @@ class User < ApplicationRecord
 
   # 3 Methods above EXCEPT modified for Invite model
   def send_invite(user, group)
-    invites.new(invitee_id: user.id, group_id: group.id)
+    my_sent_invites.new(invitee_id: user.id, group_id: group.id)
   end
 
   def recieved_invite_from_group(group)
-    pending_invites.where(group_id: group.id)
+    my_rec_invites.where(group_id: group.id)
   end
-
-
-  
 end
