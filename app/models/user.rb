@@ -15,7 +15,8 @@ class User < ApplicationRecord
 
   # Invite
   has_many :my_sent_invites, foreign_key: 'invitor_id', class_name: 'Invite'
-  has_many :my_rec_invites, -> { where confirmed: false }, class_name: 'Invite', foreign_key: 'invitee_id'
+  has_many :my_ask_invites, foreign_key: 'invitee_id', class_name: 'Invite'
+  has_many :my_rec_invites, -> { where confirmed: true, accepted: false }, class_name: 'Invite', foreign_key: 'invitee_id'
 
   # UserGroup
   has_many :hosts_groups, class_name: 'UserGroup', foreign_key: 'host_id'
@@ -70,10 +71,14 @@ class User < ApplicationRecord
 
   # 3 Methods above EXCEPT modified for Invite model
   def send_invite(user, group)
-    my_sent_invites.new(invitee_id: user.id, group_id: group.id)
+    my_sent_invites.new(invitee_id: user.id, user_group_id: group.id, confirmed: true)
+  end
+
+  def ask_invite(group)
+    my_ask_invites.new(invitor_id: group.host.id, user_group_id: group.id, accepted: true)
   end
 
   def recieved_invite_from_group(group)
-    my_rec_invites.where(group_id: group.id)
+    my_rec_invites.where(user_group_id: group.id)
   end
 end

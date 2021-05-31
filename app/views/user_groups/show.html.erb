@@ -20,15 +20,15 @@
     <%= form.label :email %>
     <%= form.text_field :email %>
     <%= form.hidden_field :invitor_id, value: current_user.id %>
-    <%= form.hidden_field :group_id, value: @user_group.id %>
+    <%= form.hidden_field :user_group_id, value: @user_group.id %>
     <%= form.submit 'Invite' %>
   <% end %>
-  <% if !Invite.self_invited(@user_group).empty? %>
+  <% if !Invite.ask_invites(@user_group).empty? %>
     <h3>People Requesting to Joing the Group</h3>
     <ul>
-      <% Invite.self_invited(@user_group).each do |invite| %>
+      <% Invite.ask_invites(@user_group).each do |invite| %>
         <li><%= invite.invitor.name %></li>
-        <%= button_to "Accept Request", invite_path(invite), method: :put, params: { invite: { group_id: @user_group.id } } %>
+        <%= button_to "Accept Request", invite_path(invite), method: :put, params: { invite: { user_group_id: @user_group.id } } %>
       <% end %>
     </ul>
   <% end %>
@@ -37,7 +37,7 @@
 <!--List Co-workers section -->
 <h3>Co-Workers in Group</h3>
 <ul>
-  <% @user_group.confirmed.each do |a| %>
+  <% @user_group.in_group.each do |a| %>
     <li><%= a.worker.name %></li>
   <% end %>
 </ul>
@@ -48,12 +48,12 @@
   <%= link_to 'Edit', edit_user_group_path(@user_group) %>
 <% else %>
   <% if !current_user.recieved_invite_from_group(@user_group).empty? %>
-    <%= button_to "Accept Invite", invite_path(current_user.recieved_invite_from_group(@user_group).first), method: :put, params: { invite: { group_id: @user_group.id } } %>
+    <%= button_to "Accept Invite", invite_path(current_user.recieved_invite_from_group(@user_group).first), method: :put, params: { invite: { user_group_id: @user_group.id } } %>
   <% elsif !current_user.hosts_groups.where(id: @user_group.id).empty? %>
     <!-- Need to touch this up -->
     <%= button_to "Leave Group" %>
   <% else %>
-    <%= button_to "Request to Join", invites_path, params: { invite: { group_id: @user_group.id }} %>
+    <%= button_to "Request to Join", invites_path, params: { invite: { user_group_id: @user_group.id }} %>
   <% end %>
 <% end %>
 

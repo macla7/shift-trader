@@ -5,6 +5,5 @@ class UserGroup < ApplicationRecord
   has_many :invites
   
   # Not in use yet (I don't believe).
-  has_many :confirmed, -> { where confirmed: true }, class_name: 'Invite', foreign_key: 'group_id'
-  has_many :unconfirmed, -> { where confirmed: false }, class_name: 'Invite', foreign_key: 'group_id'
+  has_many :in_group, -> { where confirmed: true, accepted: true }, class_name: 'Invite', foreign_key: 'user_group_id'
 end
