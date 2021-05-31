@@ -18,7 +18,9 @@ class User < ApplicationRecord
   has_many :my_rec_invites, -> { where confirmed: false }, class_name: 'Invite', foreign_key: 'invitee_id'
 
   # UserGroup
-  has_many :user_groups, foreign_key: 'host_id'
+  has_many :hosts_groups, class_name: 'UserGroup', foreign_key: 'host_id'
+  ### has_many :in_groups, through: :invites, foreign_key: 'invitee_id'
+  ### has_many :in_groups, foreign_key: 'host_id'
 
   # Validations
   validates :name, presence: true, uniqueness: true

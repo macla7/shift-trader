@@ -4,6 +4,7 @@
   <h1>Workplace: <%= @user_group.name %></h1>
 </p>
 
+<!-- Host Details -->
 <p>
   <h3>Host Details:</h3>
   <ul>
@@ -48,7 +49,7 @@
 <% else %>
   <% if !current_user.recieved_invite_from_group(@user_group).empty? %>
     <%= button_to "Accept Invite", invite_path(current_user.recieved_invite_from_group(@user_group).first), method: :put, params: { invite: { group_id: @user_group.id } } %>
-  <% elsif !current_user.user_groups.where(id: @user_group.id).empty? %>
+  <% elsif !current_user.hosts_groups.where(id: @user_group.id).empty? %>
     <!-- Need to touch this up -->
     <%= button_to "Leave Group" %>
   <% else %>
