@@ -70,15 +70,37 @@ class User < ApplicationRecord
   end
 
   # 3 Methods above EXCEPT modified for Invite model
-  def send_invite(user, group)
-    my_sent_invites.new(invitee_id: user.id, user_group_id: group.id, confirmed: true)
+
+  def invite_for_group(user_group, user = nil)
+    return send_invite(user_group, user) if user
+    ask_invite(user_group) unless user
   end
 
-  def ask_invite(group)
-    my_ask_invites.new(invitor_id: group.host.id, user_group_id: group.id, accepted: true)
+  def send_invite(user_group, user)
+    return 'in group' if alread_in_group?(user_group, user)
+    return 'already requested' if already_requested?(user_group, user)
+    return 'already invited' if already_invited?(user_group, user)
+    my_sent_invites.new(invitee_id: user.id, user_group_id: user_group.id, confirmed: true)
+  end
+
+  def ask_invite(user_group)
+    # if my ask invite is pending alread ... Should stop user in view from making error.
+    my_ask_invites.new(invitor_id: user_group.host.id, user_group_id: user_group.id, accepted: true)
   end
 
   def recieved_invite_from_group(group)
     my_rec_invites.where(user_group_id: group.id)
+  end
+
+  def already_invited?(user_group, user)
+    !Invite.where(user_group_id: user_group.id, invitee_id: user.id, confirmed: true, accepted: false).empty?
+  end
+
+  def already_requested?(user_group, user)
+    !Invite.where(user_group_id: user_group.id, invitee_id: user.id, accepted: true, confirmed: false).empty?
+  end
+
+  def alread_in_group?(user_group, user)
+    !Invite.where(user_group_id: user_group.id, invitee_id: user.id, accepted: true, confirmed: true).empty?
   end
 end

@@ -52,6 +52,11 @@ Things you may want to cover:
   <li>Adding accept invites to groups as a User.. Atm just thinking on the workplace index.</li>
   <li>Should make request to join button inacitve.</li>
   <li>Not duplicating on already accepted invites</li>
+
+  <li>THE GREAT REFEACTOR</li>
+  <li>Fixed up invite controller so a lot more of the invite logic is on model. It's on User model atm, which is questionable.. should probably be on the Invite model itself but anyway.. OFF the controller.</li>
+  <li>Next step is to refactor my twilio into a delayed job with high priority..<li>
+  <li>Refactor those ugly views ahhaha</li>
 </ul>
 
 

@@ -95,6 +95,7 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name, :password, :password_confirmation, :phone_number)
     end
 
+    # THIS goes in delay job, with high prority.
     def start_verification(to, channel='sms')
       channel = 'sms' unless ['sms', 'voice'].include? channel
       verification = @client.verify.services(Rails.application.credentials.twilio[:VERIFICATION_SID])
