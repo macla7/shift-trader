@@ -3,7 +3,6 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
-  before_action :set_client, only: [:create, :update]
 
   # GET /resource/sign_up
   # def new
@@ -24,8 +23,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         session[:user_id] = @user.id
         if resource['phone_number'] != nil
           StartVerificationJob.delay.perform(resource.phone_number, channel)
-          # Delayed::Job.enqueue StartVerificationJob.new(resource.phone_number, channel)
-          # start_verification(resource.phone_number, channel)
+          # start_verification(resource.phone_number, channel) # Original way of doing it.
           redirect_to verify_url
         else
           redirect_to users_path
@@ -62,7 +60,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       bypass_sign_in resource, scope: resource_name if sign_in_after_change_password?
 
       if resource.phone_number
-        start_verification(resource.phone_number, channel)
+        StartVerificationJob.delay.perform(resource.phone_number, channel)
         redirect_to verify_url
       else
         redirect_to users_path
@@ -132,18 +130,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
-
-  def set_client
-    @client = Twilio::REST::Client.new(Rails.application.credentials.twilio[:ACCOUNT_SID], Rails.application.credentials.twilio[:AUTH_TOKEN])
-  end
-
-  def start_verification(to, channel='sms')
-    channel = 'sms' unless ['sms', 'voice'].include? channel
-    verification = @client.verify.services(Rails.application.credentials.twilio[:VERIFICATION_SID])
-                                 .verifications
-                                 .create(:to => to, :channel => channel)
-    return verification.sid
-  end
 
   def user_params
     params.require(:user).permit(:name, :password, :password_confirmation, :phone_number, :email)
