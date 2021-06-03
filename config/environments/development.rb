@@ -77,4 +77,5 @@ Rails.application.configure do
   # # On orders from devise lol
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
+  config.active_job.queue_adapter = :delayed_job
 end

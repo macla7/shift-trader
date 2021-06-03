@@ -23,7 +23,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
         sign_up(resource_name, resource)
         session[:user_id] = @user.id
         if resource['phone_number'] != nil
-          start_verification(resource.phone_number, channel)
+          StartVerificationJob.delay.perform(resource.phone_number, channel)
+          # Delayed::Job.enqueue StartVerificationJob.new(resource.phone_number, channel)
+          # start_verification(resource.phone_number, channel)
           redirect_to verify_url
         else
           redirect_to users_path

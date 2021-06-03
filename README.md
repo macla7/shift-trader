@@ -53,10 +53,23 @@ Things you may want to cover:
   <li>Should make request to join button inacitve.</li>
   <li>Not duplicating on already accepted invites</li>
 
-  <li>THE GREAT REFEACTOR</li>
-  <li>Fixed up invite controller so a lot more of the invite logic is on model. It's on User model atm, which is questionable.. should probably be on the Invite model itself but anyway.. OFF the controller.</li>
-  <li>Next step is to refactor my twilio into a delayed job with high priority..<li>
-  <li>Refactor those ugly views ahhaha</li>
+  <li>THE GREAT REFEACTOR
+    <ul>
+      <li>Fixed up invite controller so a lot more of the invite logic is on model. It's on User model atm, which is questionable.. should probably be on the Invite model itself but anyway.. OFF the controller.</li>
+      <li>Next step is to refactor my twilio into a delayed job with high priority..<li>
+      <li>Refactor those ugly views ahhaha</li>
+    </ul>
+  </li>
+
+  <li>GREATEST HICCUP YET
+    <ul>
+      <li>Using Delayed job... daemons bin/delayed scripting.. It just won't work..</li>
+      <li>I've found soooo many posts of people running into the same issue and then no one being able to give them a straight answer..? Or commonly, no one answering at all... Think it's time to set this one to the side for the moment. I know how to use it in development with the 'rake jobs:work' command, which apparently does the same thing anyway.. Just got to open up another terminal tab to be running this.</li>
+      <li>Maybe, just maybe.. it's for some reason just not liking the development mode (daemons scripting that is).. idk..</li>
+      <li>Either way, not even sure if I should be using delayed job, when compared to the other options out there like resque, sidkiq, etc.. (mispelling warning lol).</li>
+    </ul>
+  </li>
+  
 </ul>
 
 
