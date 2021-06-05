@@ -1,20 +1,9 @@
-<% if host == 'host' %>
-  <h3>Invite Co-Workers</h3>
-  <%= form_with url: '/invites', method: :post, scope: 'invite' do |form| %>
-    <%= form.label :email %>
-    <%= form.text_field :email %>
-    <%= form.hidden_field :invitor_id, value: current_user.id %>
-    <%= form.hidden_field :user_group_id, value: user_group.id %>
-    <%= form.submit 'Invite' %>
-  <% end %>
 
-  <% if !Invite.ask_invites(user_group).empty? %>
-    <h3>People Requesting to Joing the Group</h3>
-    <ul>
-      <% Invite.ask_invites(user_group).each do |invite| %>
-        <li><%= invite.invitor.name %></li>
-        <%= button_to "Accept Request", invite_path(invite), method: :put, params: { invite: { user_group_id: user_group.id } } %>
-      <% end %>
-    </ul>
-  <% end %>
+<h3>Invite Co-Workers</h3>
+<%= form_with url: '/invites', method: :post, scope: 'invite' do |form| %>
+  <%= form.label :email %>
+  <%= form.text_field :email %>
+  <%= form.hidden_field :invitor_id, value: current_user.id %>
+  <%= form.hidden_field :user_group_id, value: user_group.id %>
+  <%= form.submit 'Invite' %>
 <% end %>

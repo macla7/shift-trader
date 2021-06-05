@@ -9,7 +9,6 @@ class UserGroupsController < ApplicationController
 
   # GET /user_groups/1 or /user_groups/1.json
   def show
-    @user_group_presenter = UserGroupPresenter.new(@user_group)
   end
 
   # GET /user_groups/new
@@ -24,7 +23,7 @@ class UserGroupsController < ApplicationController
   # POST /user_groups or /user_groups.json
   def create
     @user_group = UserGroup.new(user_group_params)
-    @invite = Invite.new(invitor: current_user, invitee: current_user, user_group: @user_group, confirmed: true)
+    @invite = Invite.new(invitor: current_user, invitee: current_user, user_group: @user_group, confirmed: true, accepted: true)
 
     respond_to do |format|
       if @user_group.save && @invite.save

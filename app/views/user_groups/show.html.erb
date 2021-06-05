@@ -1,41 +1,34 @@
-<p id="notice"><%= notice %></p>
+<% present @user_group do |user_group_presenter| %>
+  <p id="notice"><%= notice %></p>
 
-<p>
-  <h1>Workplace: <%= @user_group.name %></h1>
-</p>
+  <p>
+    <h1>Workplace: <%= @user_group.name %></h1>
+  </p>
 
-<!-- Host Details -->
-<p>
-  <h3>Host Details:</h3>
+  <!-- Host Details -->
+  <p>
+    <h3>Host Details:</h3>
+    <ul>
+      <li>Name: <%= @user_group.host.name %></li>
+      <li>Email: <%= @user_group.host.email %></li>
+    </ul>
+  </p>
+
+  <!-- Invite Section for Hosts -->
+  <%= render partial: "#{user_group_presenter.user_type}_invite_section", locals: {user_group: @user_group} %>
+  <%= render partial: "invite/#{user_group_presenter.user_type}_asking_invite", collection: @user_group.ask_invites, as: :invite %>
+
+  <!--List Co-workers section -->
+  <h3>Co-Workers in Group</h3>
   <ul>
-    <li>Name: <%= @user_group.host.name %></li>
-    <li>Email: <%= @user_group.host.email %></li>
+    <%= render @user_group.members %>
   </ul>
-</p>
 
-<%= render partial: "host_invite_section", locals: {user_group: @user_group} %>
+  <!-- Host Actions -->
+  <%= render partial: "#{user_group_presenter.user_type}_actions" %>
 
-<!--List Co-workers section -->
-<h3>Co-Workers in Group</h3>
-<ul>
-  <% @user_group.in_group.each do |a| %>
-    <li><%= a.worker.name %></li>
-  <% end %>
-</ul>
+  <!-- Worker Actions -->
+  <%= user_group_presenter.group_actions %>
 
-<!-- Group Actions -->
-<% if @user_group.host_id == session[:user_id] %>
-  <%= link_to 'Destroy', @user_group, method: :delete, data: { confirm: 'Are you sure?' } %>
-  <%= link_to 'Edit', edit_user_group_path(@user_group) %>
-<% else %>
-  <% if !current_user.recieved_invite_from_group(@user_group).empty? %>
-    <%= button_to "Accept Invite", invite_path(current_user.recieved_invite_from_group(@user_group).first), method: :put, params: { invite: { user_group_id: @user_group.id } } %>
-  <% elsif !current_user.hosts_groups.where(id: @user_group.id).empty? %>
-    <!-- Need to touch this up -->
-    <%= button_to "Leave Group" %>
-  <% else %>
-    <%= button_to "Request to Join", invites_path, params: { invite: { user_group_id: @user_group.id }} %>
-  <% end %>
+  <%= link_to 'Back', user_groups_path %>
 <% end %>
-
-<%= link_to 'Back', user_groups_path %>

@@ -4,6 +4,11 @@ class UserGroup < ApplicationRecord
 
   has_many :invites
   
-  # Not in use yet (I don't believe).
-  has_many :in_group, -> { where confirmed: true, accepted: true }, class_name: 'Invite', foreign_key: 'user_group_id'
+  has_many :members, -> { where confirmed: true, accepted: true }, class_name: 'Invite', foreign_key: 'user_group_id'
+  has_many :ask_invites, -> { where confirmed: false, accepted: true }, class_name: 'Invite', foreign_key: 'user_group_id'
+
+
+  def has_member?(user)
+    !members.where(invitee_id: user.id).empty?
+  end
 end
