@@ -9,6 +9,7 @@ class UserGroupsController < ApplicationController
 
   # GET /user_groups/1 or /user_groups/1.json
   def show
+    @user_group_presenter = UserGroupPresenter.new(@user_group)
   end
 
   # GET /user_groups/new
