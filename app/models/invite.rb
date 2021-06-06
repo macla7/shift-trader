@@ -2,6 +2,7 @@ class Invite < ApplicationRecord
   belongs_to :user_group, foreign_key: 'user_group_id'
   belongs_to :invitor, class_name: 'User', inverse_of: 'my_sent_invites'
   belongs_to :invitee, class_name: 'User', inverse_of: 'my_ask_invites'
+  # belongs_to :member,-> { where accepted: true, confirmed: true}, class_name: 'User'
   
   # Given an invite, find the actual non-host on Invite.
   def worker
