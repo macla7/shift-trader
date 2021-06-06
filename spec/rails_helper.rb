@@ -71,6 +71,6 @@ RSpec.configure do |config|
   end
 
   include Warden::Test::Helpers
-
+  
   config.include Auth, type: :feature
 end

@@ -29,8 +29,8 @@ Things you may want to cover:
   <li>TO come back to the websockets for a multitude of things.. Green circle next to user to show online. But also, this phone JavaScript business form from twilio..</li>
   <li>Will come back to facebook permissions with phone and avatar (profile pic).</li>
   <li>SO want to be able to make user without phone, only email necessary, cause this is all facebook will give me at this point lol. <ahref="https://developers.facebook.com/docs/permissions/reference">link</a>.</li>
-  <li>Notifications model for User? Has_many relationship, only index view?<li>
-  <li>listens for unconfirmed invites to groups.. Then later, seems like a JS thing, will listen for Likes and Comments.<li>
+  <li>Notifications model for User? Has_many relationship, only index view?</li>
+  <li>listens for unconfirmed invites to groups.. Then later, seems like a JS thing, will listen for Likes and Comments.</li>
 </ul>
 
 <h2>Errors fixed and brief on how</h2>
@@ -43,7 +43,10 @@ Things you may want to cover:
   <li>Used this guide <a href="https://github.com/omniauth/omniauth/wiki/Managing-Multiple-Providers">here</a>, and a few others similar to it to sort out having multiple ways to identify (or authenticate). Essentially made an Identify model with belongs_to User. This then can word in 3 ways. Identify model can be linked to User when already logged in. Can be used to log in. Can be used to sign up.</li>
   <li>Followed bottom of <a href="https://www.reddit.com/r/rails/comments/5eufg4/devise_and_omniauth_set_password_after/">this</a> post for setting a user's password, after they've intially signed up with an omniauth method. This way they can then re log back in with email and password.</li>
   <li>Implementation of invite model was outlined <a href="https://coderwall.com/p/rqjjca/creating-a-scoped-invitation-system-for-rails">here</a>.</li>
-  <li>To DRY up feature specs, found this great <a href="https://stackoverflow.com/questions/32628093/using-devise-in-rspec-feature-tests">SO post</a> about making a spec/support Auth module to help with logging in and out with devise/warden. This is OP.<li>
+  <li>To DRY up feature specs, found this great <a href="https://stackoverflow.com/questions/32628093/using-devise-in-rspec-feature-tests">SO post</a> about making a spec/support Auth module to help with logging in and out with devise/warden. This is OP. Two things not really in the post.<ul>
+    <li>I had too include this at top of rails_helper -> " require 'support/auth' " in order to load module I think.</li>
+    <li> I had to include these two lines in the RSpec.configure block<br />include Warden::Test::Helpers<br />config.include Auth, type: :feature</li>
+  </ul></li>
 </ul>
 
 <h2>Current Problems to be fixed</h2>
