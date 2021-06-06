@@ -4,7 +4,7 @@ class UserGroup < ApplicationRecord
 
   has_many :invites
   
-  has_many :members, -> { where confirmed: true, accepted: true }, class_name: 'Invite', foreign_key: 'user_group_id'
+  has_many :members, class_name: 'User', through: :invites, source: 'invitee'
   has_many :ask_invites, -> { where confirmed: false, accepted: true }, class_name: 'Invite', foreign_key: 'user_group_id'
 
 

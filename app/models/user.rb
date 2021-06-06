@@ -14,13 +14,14 @@ class User < ApplicationRecord
   has_many :identities, dependent: :destroy
 
   # Invite
+  has_many :invites, foreign_key: 'invitee_id'
   has_many :my_sent_invites, foreign_key: 'invitor_id', class_name: 'Invite'
   has_many :my_ask_invites, foreign_key: 'invitee_id', class_name: 'Invite'
   has_many :my_rec_invites, -> { where confirmed: true, accepted: false }, class_name: 'Invite', foreign_key: 'invitee_id'
 
   # UserGroup
   has_many :hosts_groups, class_name: 'UserGroup', foreign_key: 'host_id'
-  ### has_many :in_groups, through: :invites, foreign_key: 'invitee_id'
+  has_many :in_groups, class_name: 'UserGroup', through: :invites, source: 'user_group', foreign_key: 'invitee_id'
   ### has_many :in_groups, foreign_key: 'host_id'
 
   # Validations
@@ -33,9 +34,9 @@ class User < ApplicationRecord
   # end
 
   # Omniauth custom method from user guide
-  def self.create_with_omniauth(info)
-    create(name: info['name'])
-  end
+  # def self.create_with_omniauth(info)
+  #   create(name: info['name'])
+  # end
 
   # From Omniauth guide
   def self.from_omniauth(auth)
@@ -77,7 +78,7 @@ class User < ApplicationRecord
   end
 
   def send_invite(user_group, user)
-    return 'in group' if alread_in_group?(user_group, user)
+    return 'in group' if already_in_group?(user_group, user)
     return 'already requested' if already_requested?(user_group, user)
     return 'already invited' if already_invited?(user_group, user)
     my_sent_invites.new(invitee_id: user.id, user_group_id: user_group.id, confirmed: true)
@@ -100,7 +101,7 @@ class User < ApplicationRecord
     !Invite.where(user_group_id: user_group.id, invitee_id: user.id, accepted: true, confirmed: false).empty?
   end
 
-  def alread_in_group?(user_group, user)
+  def already_in_group?(user_group, user)
     !Invite.where(user_group_id: user_group.id, invitee_id: user.id, accepted: true, confirmed: true).empty?
   end
 end

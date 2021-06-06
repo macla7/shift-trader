@@ -21,7 +21,7 @@
   <!--List Co-workers section -->
   <h3>Co-Workers in Group</h3>
   <ul>
-    <%= render @user_group.members %>
+    <%= render partial: "users/member", collection: @user_group.members, as: :member %>
   </ul>
 
   <!-- Host Actions -->

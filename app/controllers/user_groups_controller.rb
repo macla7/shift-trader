@@ -9,6 +9,8 @@ class UserGroupsController < ApplicationController
 
   # GET /user_groups/1 or /user_groups/1.json
   def show
+    puts @user_group.members
+    @user_group.members.each {|i| p i}
   end
 
   # GET /user_groups/new

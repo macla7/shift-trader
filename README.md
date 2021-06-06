@@ -1,7 +1,6 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This README would normally document whatever steps are necessary to get the application up and running.
 
 Things you may want to cover:
 
@@ -48,16 +47,19 @@ Things you may want to cover:
 
 <h2>Current Problems to be fixed</h2>
 <ul>
-  <li>Adding accepting Invites from other users (when logged in as host)</li>
-  <li>Adding accept invites to groups as a User.. Atm just thinking on the workplace index.</li>
   <li>Should make request to join button inacitve.</li>
   <li>Not duplicating on already accepted invites</li>
 
-  <li>THE GREAT REFEACTOR
+  <li>TEST WEEK
     <ul>
-      <li>Fixed up invite controller so a lot more of the invite logic is on model. It's on User model atm, which is questionable.. should probably be on the Invite model itself but anyway.. OFF the controller.</li>
-      <li>Next step is to refactor my twilio into a delayed job with high priority..<li>
-      <li>Refactor those ugly views ahhaha</li>
+      <li>Models</li>
+      <li>Jobs</li>
+      <li>Controllers</li>
+      <li>Features</li>
+      <li>Presenters?</li>
+      <li>Views</li>
+      <li>Twilio sending phone</li>
+      <li>Omniauth</li>
     </ul>
   </li>
 
