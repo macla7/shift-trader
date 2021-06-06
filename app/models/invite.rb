@@ -6,8 +6,6 @@ class Invite < ApplicationRecord
   validates :user_group_id, presence: :true
   validates :invitor_id, presence: :true
   validates :invitee_id, presence: :true
-  validates :accepted, presence: :true
-  validates :confirmed, presence: :true
   
   # Given an invite, find the actual non-host on Invite.
   # def worker

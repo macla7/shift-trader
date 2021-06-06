@@ -28,8 +28,6 @@ RSpec.describe Invite, type: :model do
     it { should validate_presence_of(:user_group_id) }
     it { should validate_presence_of(:invitee_id) }
     it { should validate_presence_of(:invitor_id) }
-    it { should validate_presence_of(:accepted) }
-    it { should validate_presence_of(:confirmed) }
   end
 
   describe "#to_partial_path" do

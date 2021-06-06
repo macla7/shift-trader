@@ -12,33 +12,33 @@
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe "/users", type: :request do
-  
-  # User. As you add validations to User, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
-
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
-
-  describe "GET /index" do
-    it "renders a successful response" do
-      User.create! valid_attributes
-      get users_url
-      expect(response).to be_successful
-    end
-  end
-
-  describe "GET /show" do
-    it "renders a successful response" do
-      user = User.create! valid_attributes
-      get user_url(user)
-      expect(response).to be_successful
-    end
-  end
+  # RSpec.describe "/users", type: :request do
+  #   
+  #   # User. As you add validations to User, be sure to
+  #   # adjust the attributes here as well.
+  #   let(:valid_attributes) {
+  #     skip("Add a hash of attributes valid for your model")
+  #   }
+  # 
+  #   let(:invalid_attributes) {
+  #     skip("Add a hash of attributes invalid for your model")
+  #   }
+  # 
+  #   describe "GET /index" do
+  #     it "renders a successful response" do
+  #       User.create! valid_attributes
+  #       get users_url
+  #       expect(response).to be_successful
+  #     end
+  #   end
+  # 
+  #   describe "GET /show" do
+  #     it "renders a successful response" do
+  #       user = User.create! valid_attributes
+  #       get user_url(user)
+  #       expect(response).to be_successful
+  #     end
+  #   end
 
   # describe "GET /new" do
   #   it "renders a successful response" do
@@ -112,19 +112,19 @@ RSpec.describe "/users", type: :request do
   #     end
   #   end
   # end
-
-  describe "DELETE /destroy" do
-    it "destroys the requested user" do
-      user = User.create! valid_attributes
-      expect {
-        delete user_url(user)
-      }.to change(User, :count).by(-1)
-    end
-
-    it "redirects to the users list" do
-      user = User.create! valid_attributes
-      delete user_url(user)
-      expect(response).to redirect_to(users_url)
-    end
-  end
-end
+  # 
+  #   describe "DELETE /destroy" do
+  #     it "destroys the requested user" do
+  #       user = User.create! valid_attributes
+  #       expect {
+  #         delete user_url(user)
+  #       }.to change(User, :count).by(-1)
+  #     end
+  # 
+  #     it "redirects to the users list" do
+  #       user = User.create! valid_attributes
+  #       delete user_url(user)
+  #       expect(response).to redirect_to(users_url)
+  #     end
+  #   end
+  # end
