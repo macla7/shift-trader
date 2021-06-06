@@ -43,6 +43,7 @@ Things you may want to cover:
   <li>Used this guide <a href="https://github.com/omniauth/omniauth/wiki/Managing-Multiple-Providers">here</a>, and a few others similar to it to sort out having multiple ways to identify (or authenticate). Essentially made an Identify model with belongs_to User. This then can word in 3 ways. Identify model can be linked to User when already logged in. Can be used to log in. Can be used to sign up.</li>
   <li>Followed bottom of <a href="https://www.reddit.com/r/rails/comments/5eufg4/devise_and_omniauth_set_password_after/">this</a> post for setting a user's password, after they've intially signed up with an omniauth method. This way they can then re log back in with email and password.</li>
   <li>Implementation of invite model was outlined <a href="https://coderwall.com/p/rqjjca/creating-a-scoped-invitation-system-for-rails">here</a>.</li>
+  <li>To DRY up feature specs, found this great <a href="https://stackoverflow.com/questions/32628093/using-devise-in-rspec-feature-tests">SO post</a> about making a spec/support Auth module to help with logging in and out with devise/warden. This is OP.<li>
 </ul>
 
 <h2>Current Problems to be fixed</h2>
@@ -52,10 +53,10 @@ Things you may want to cover:
 
   <li>TEST WEEK
     <ul>
-      <li>Models</li>
+      <li>DONE - Models</li>
       <li>Jobs</li>
       <li>Controllers</li>
-      <li>Features</li>
+      <li>STARTED - Features</li>
       <li>Presenters?</li>
       <li>Views</li>
       <li>Twilio sending phone</li>
