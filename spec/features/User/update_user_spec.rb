@@ -7,7 +7,6 @@ RSpec.describe 'Updating a user', type: :feature do
       create_user!
       login_and_logout_with_warden do
         visit users_path
-        # take a screenshot?
         click_on 'Show'
         click_on 'Edit'
         fill_in 'Name', with: 'Blek'
@@ -18,6 +17,22 @@ RSpec.describe 'Updating a user', type: :feature do
         click_on 'Update'
         visit users_path
         expect(page).to have_content('Blek')
+      end
+    end
+
+    scenario 'Invalid password' do
+      create_user!
+      login_and_logout_with_warden do
+        visit users_path
+        click_on 'Show'
+        click_on 'Edit'
+        fill_in 'Name', with: 'Blek'
+        fill_in 'Email', with: 'blek@blek'
+        fill_in 'Password', with: 'Ching123'
+        fill_in 'Password confirmation', with: 'Ching123'
+        fill_in 'Current password', with: 'Wrong111'
+        click_on 'Update'
+        expect(page).to have_content('Current password is invalid')
       end
     end
   end

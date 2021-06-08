@@ -8,7 +8,7 @@ class UserGroup < ApplicationRecord
   has_many :members, class_name: 'User', through: :member_invites, source: 'invitee'
 
   validates :host_id, presence: :true
-  validates :name, presence: :true
+  validates :name, presence: :true, uniqueness: true
 
   def has_member?(user)
     !members.where(id: user.id).empty?

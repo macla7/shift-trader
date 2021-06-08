@@ -9,8 +9,6 @@ class UserGroupsController < ApplicationController
 
   # GET /user_groups/1 or /user_groups/1.json
   def show
-    puts @user_group.members
-    @user_group.members.each {|i| p i}
   end
 
   # GET /user_groups/new
@@ -28,9 +26,16 @@ class UserGroupsController < ApplicationController
     @invite = Invite.new(invitor: current_user, invitee: current_user, user_group: @user_group, confirmed: true, accepted: true)
 
     respond_to do |format|
-      if @user_group.save && @invite.save
-        format.html { redirect_to @user_group, notice: "User group was successfully created." }
-        format.json { render :show, status: :created, location: @user_group }
+      if @user_group.save
+        @invite.user_group = @user_group
+        if @invite.save
+          format.html { redirect_to @user_group, notice: "User group was successfully created." }
+          format.json { render :show, status: :created, location: @user_group }
+        else
+          @user_group.delete
+          format.html { redirect_to new_user_group_path, notice: "Error creating group." }
+          format.json { render :show, status: :created, location: @user_group }
+        end
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @user_group.errors, status: :unprocessable_entity }

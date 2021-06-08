@@ -71,6 +71,13 @@ RSpec.configure do |config|
   end
 
   include Warden::Test::Helpers
+
+  OmniAuth.config.test_mode = true
+  OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
+    :provider => 'facebook',
+    :uid => '12345'
+    # etc.
+  })
   
   config.include Auth, type: :feature
 end
