@@ -1,1 +1,3 @@
-<li><%= member.name %></li>
+<% present @user_group do |user_group_presenter| %>
+  <li><%= member.name %> <%= user_group_presenter.kick_rights(member) %></li>
+<% end %>

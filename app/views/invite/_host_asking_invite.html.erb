@@ -1,4 +1,4 @@
 <ul>
   <li><%= invite.invitee.name %></li>
-  <%= button_to "Accept Request", invite_path(invite), method: :put, params: { invite: { user_group_id: @user_group.id } } %>
+  <%= button_to "Accept Request", invite_path(invite), method: :put, params: { invite: { user_group_id: @user_group.id }, host: true } %>
 </ul>

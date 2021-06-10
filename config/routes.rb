@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   get 'verify', to: 'users#verify', as: 'verify'
   post 'verify', to: 'users#verify'
+  
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

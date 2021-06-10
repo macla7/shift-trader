@@ -14,7 +14,7 @@ class User < ApplicationRecord
   has_many :identities, dependent: :destroy
 
   # Invite
-  has_many :invites, foreign_key: 'invitee_id'
+  has_many :invites, -> { where confirmed: true, accepted: true }, foreign_key: 'invitee_id'
   has_many :my_sent_invites, foreign_key: 'invitor_id', class_name: 'Invite'
   has_many :my_ask_invites, foreign_key: 'invitee_id', class_name: 'Invite'
   has_many :my_rec_invites, -> { where confirmed: true, accepted: false }, class_name: 'Invite', foreign_key: 'invitee_id'
@@ -54,6 +54,7 @@ class User < ApplicationRecord
   end
 
   # Next 3 methods are from request guide.
+  # x)
   def friends
     friends_i_sent_requests = Request.where(user_id: id, confirmed: true).pluck(:friend_id)
     friends_i_got_requests = Request.where(friend_id: id, confirmed: true).pluck(:user_id)
@@ -61,48 +62,68 @@ class User < ApplicationRecord
     User.where(id: ids)
   end
 
-  # 2.
+  # y)
   def friends_with?(user)
     Request.confirmed_request?(id, user.id)
   end
 
-  # 3.
+  # z)
   def send_request(user)
     requests.create(friend_id: user.id)
   end
 
   # 3 Methods above EXCEPT modified for Invite model
-
+  # 3 Invite Methods
+  # 1.
   def invite_for_group(user_group, user = nil)
     return send_invite(user_group, user) if user
     ask_invite(user_group) unless user
   end
 
+  # 2.
   def send_invite(user_group, user)
-    return 'in group' if already_in_group?(user_group, user)
-    return 'already requested' if already_requested?(user_group, user)
-    return 'already invited' if already_invited?(user_group, user)
+    return 'Worker already in group.' if already_in_group?(user_group, user)
+    return "#{user.email} has already requested to join!" if already_requested?(user_group, user)
+    return "Already sent an invite to #{user.email}!" if already_invited?(user_group, user)
     my_sent_invites.new(invitee_id: user.id, user_group_id: user_group.id, confirmed: true)
   end
 
+  # 3.
   def ask_invite(user_group)
     # if my ask invite is pending alread ... Should stop user in view from making error.
     my_ask_invites.new(invitor_id: user_group.host.id, user_group_id: user_group.id, accepted: true)
   end
 
+  # 4 Invite support methods
+  # a)
   def recieved_invite_from_group(group)
     my_rec_invites.where(user_group_id: group.id)
   end
 
+  # b)
   def already_invited?(user_group, user)
     !Invite.where(user_group_id: user_group.id, invitee_id: user.id, confirmed: true, accepted: false).empty?
   end
 
+  # c)
   def already_requested?(user_group, user)
     !Invite.where(user_group_id: user_group.id, invitee_id: user.id, accepted: true, confirmed: false).empty?
   end
 
+  # d)
   def already_in_group?(user_group, user)
     !Invite.where(user_group_id: user_group.id, invitee_id: user.id, accepted: true, confirmed: true).empty?
   end
+
+  # 2 Member Methods
+  # i)
+  def find_membership(user_group, user)
+    user.invites.where(user_group_id: user_group.id).first
+  end
+
+  # ii)
+  def find_membership_with_group(user_group)
+    invites.where(user_group_id: user_group.id).first
+  end
+
 end

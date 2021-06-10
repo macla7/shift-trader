@@ -9,8 +9,8 @@ class InvitesController < ApplicationController
     if @invite.is_a? String
       redirect_to user_group_path(user_group), notice: "#{@invite}"
     elsif @invite.save
-      redirect_to user_group_path(user_group), notice: "Request Sent!" if invitee
-      redirect_to user_group_path(user_group), notice: "Request to join group!" unless invitee
+      redirect_to user_group_path(user_group), notice: "Invite Sent!" if invitee
+      redirect_to user_group_path(user_group), notice: "Request to join group sent!" unless invitee
     else
       redirect_to user_group_path(user_group), notice: "Unknown Error.."
     end
@@ -22,9 +22,23 @@ class InvitesController < ApplicationController
     @invite.confirmed = true
     @invite.accepted = true
     if @invite.update(invite_params)
-      redirect_to user_group_path(user_group), notice: 'Invite accepted!'
+      redirect_to user_group_path(user_group), notice: 'Request accepted!' if params['host']
+      redirect_to user_group_path(user_group), notice: 'Invite accepted!' unless params['host']
     else
       redirect_to user_group_path(user_group), notice: 'Invite failed to accept..'
+    end
+  end
+
+  def destroy
+    name = @invite.invitee.name
+    group = @invite.user_group
+
+
+    @invite.destroy!
+    respond_to do |format|
+      format.html { redirect_to user_group_path(group.id), notice: "#{name} was kicked." } unless params['leave']
+      format.html { redirect_to user_groups_path, notice: "You left #{group.name}" } if params['leave']
+      format.json { head :no_content }
     end
   end
 

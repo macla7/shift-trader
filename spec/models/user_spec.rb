@@ -71,6 +71,7 @@ RSpec.describe User, type: :model do
       context 'Called with user' do
         it 'return invite, with acceped: false' do
           subject.save!
+          puts subject.id
           user2.save!
           group.save!
           invite = subject.invite_for_group(group, user2)
@@ -177,26 +178,68 @@ RSpec.describe User, type: :model do
     end
 
     describe '#already_in_group?' do
-
-        context "in group" do
-          it 'return true' do
-            subject.save!
-            group.save!
-            invite.save!
-            expect(subject).to be_already_in_group(group, subject)
-          end
+      context "in group" do
+        it 'return true' do
+          subject.save!
+          group.save!
+          invite.save!
+          expect(subject).to be_already_in_group(group, subject)
         end
+      end
 
-        context "not in group" do
-          it 'return false' do
-            subject.save!
-            group.save!
-            puts subject.id
-            puts 'hi'
-            expect(subject).to_not be_already_in_group(group, subject)
-          end
+      context "not in group" do
+        it 'return false' do
+          subject.save!
+          group.save!
+          expect(subject).to_not be_already_in_group(group, subject)
         end
+      end
     end
+  end
+
+  describe "MEMBER METHODS" do
+
+    describe '#find_membership' do
+      context 'with member' do
+        it 'return invite' do
+          subject.save!
+          group.save!
+          invite.save!
+          expect(subject.find_membership(group, subject)).to be_a Invite
+        end
+      end
+
+      context 'no member' do
+        it 'return invite, with confirmed: false' do
+          subject.save!
+          group.save!
+          invite.confirmed = false
+          invite.save!
+          expect(subject.find_membership(group, subject)).to be nil
+        end
+      end
+    end
+
+    describe '#find_membership_with_group' do
+      context "with member existing" do
+        it 'return invite' do
+          subject.save!
+          group.save!
+          invite.save!
+          expect(subject.find_membership_with_group(group)).to be_a Invite
+        end
+      end
+
+      context "not in group" do
+        it 'return nil' do
+          subject.save!
+          group.save!
+          invite.confirmed = false
+          invite.save!
+          expect(subject.find_membership_with_group(group)).to be nil
+        end
+      end
+    end 
   end
 
 end

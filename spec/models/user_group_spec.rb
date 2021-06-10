@@ -61,7 +61,27 @@ RSpec.describe UserGroup, type: :model do
         expect(subject).to_not be_has_member(user)
       end
     end
-
   end
 
+  describe "#has_ask_invite?" do
+    context 'that does exist' do
+      it 'returns true' do
+        user.save!
+        subject.save!
+        invite.confirmed = false
+        invite.save!
+        expect(subject).to be_has_ask_invite(user)
+      end
+    end
+
+    context 'that does exist' do
+      it 'returns true' do
+        user.save!
+        subject.save!
+        invite.accepted = false
+        invite.save!
+        expect(subject).to_not be_has_ask_invite(user)
+      end
+    end
+  end
 end

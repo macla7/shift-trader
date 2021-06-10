@@ -13,4 +13,8 @@ class UserGroup < ApplicationRecord
   def has_member?(user)
     !members.where(id: user.id).empty?
   end
+
+  def has_ask_invite?(user)
+    !ask_invites.where(invitee_id: user.id).empty?
+  end
 end

@@ -51,19 +51,17 @@ Things you may want to cover:
 
 <h2>Current Problems to be fixed</h2>
 <ul>
-  <li>Should make request to join button inacitve.</li>
-  <li>Not duplicating on already accepted invites</li>
 
   <li>TEST WEEK
     <ul>
       <li>DONE - Models</li>
       <li>Jobs</li>
       <li>Controllers</li>
-      <li>STARTED - Features</li>
+      <li>Done - Features</li>
       <li>Presenters?</li>
       <li>Views</li>
-      <li>Twilio sending phone</li>
-      <li>Omniauth</li>
+      <li>FINAL BOSS - Twilio sending phone</li>
+      <li>Done - Omniauth</li>
     </ul>
   </li>
 

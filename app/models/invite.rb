@@ -21,6 +21,8 @@ class Invite < ApplicationRecord
     'invite/member'
   end
 
+
+
   # Example of class method that replicates the above scope.
   # def self.self_invited(user_group)
   #   where(invitee_id: user_group.host_id, confirmed: false)
