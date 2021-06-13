@@ -1,3 +1,5 @@
+<h1>Post to #method to get group name</h1>
+
 <%= form_with(model: post) do |form| %>
   <% if post.errors.any? %>
     <div id="error_explanation">
@@ -22,14 +24,20 @@
   </div>
 
   <div class="field">
-    <%= form.label :user_group_id %>
-    <%= form.number_field :user_group_id %>
+  <%= form.hidden_field :user_id , value: current_user.id %>
   </div>
 
   <div class="field">
-    <%= form.label :user_id %>
-    <%= form.number_field :user_id %>
+  <%= form.hidden_field :user_group_id , value: params['post']['user_group_id'] %>
   </div>
+
+  <p>Some JS to say:</p>
+  <ul>
+    <li>Radio button for have shift or not</li>
+    <li>This open ups nested(?) shift form if needed</li>
+    <li>Radio buttons for 'Auction' or 'Fixed Price' Post</li>
+    <li>This then opens up nested(?) Auction form if needed</li>
+  </ul>
 
   <div class="actions">
     <%= form.submit %>

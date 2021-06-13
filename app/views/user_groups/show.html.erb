@@ -24,7 +24,13 @@
     <%= render partial: "users/member", collection: @user_group.members, as: :member %>
   </ul>
 
+  <!-- Posts section -->
+  <h3>Posts</h3>
+  <%= button_to 'Create Post', new_post_path, method: :get, params: { post: { user_group_id: @user_group.id } } %>
+  <%= render @posts %>
+
   <!-- Host Actions -->
+  <h3>Group Actions</h3>
   <%= render partial: "#{user_group_presenter.user_type}_actions" %>
 
   <!-- Worker Actions -->

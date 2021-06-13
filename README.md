@@ -31,6 +31,7 @@ Things you may want to cover:
   <li>SO want to be able to make user without phone, only email necessary, cause this is all facebook will give me at this point lol. <ahref="https://developers.facebook.com/docs/permissions/reference">link</a>.</li>
   <li>Notifications model for User? Has_many relationship, only index view?</li>
   <li>listens for unconfirmed invites to groups.. Then later, seems like a JS thing, will listen for Likes and Comments.</li>
+  <li>Post form url could be manipulated to post to another random group. Maybe check they are in the group first?</li>
 </ul>
 
 <h2>Errors fixed and brief on how</h2>

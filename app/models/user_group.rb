@@ -7,6 +7,8 @@ class UserGroup < ApplicationRecord
 
   has_many :members, class_name: 'User', through: :member_invites, source: 'invitee'
 
+  has_many :posts
+
   validates :host_id, presence: :true
   validates :name, presence: :true, uniqueness: true
 

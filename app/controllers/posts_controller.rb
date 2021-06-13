@@ -21,11 +21,16 @@ class PostsController < ApplicationController
 
   # POST /posts or /posts.json
   def create
+    puts 'HEEELLLO'
+    puts params
+    p params
+    puts 'GOODBYE'
     @post = Post.new(post_params)
+    user_group = UserGroup.find_by(id: params['post']['user_group_id'])
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, notice: "Post was successfully created." }
+        format.html { redirect_to user_group_path(user_group), notice: "Post was successfully created." }
         format.json { render :show, status: :created, location: @post }
       else
         format.html { render :new, status: :unprocessable_entity }

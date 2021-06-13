@@ -24,6 +24,8 @@ class User < ApplicationRecord
   has_many :in_groups, class_name: 'UserGroup', through: :invites, source: 'user_group', foreign_key: 'invitee_id'
   ### has_many :in_groups, foreign_key: 'host_id'
 
+  has_many :posts
+
   # Validations
   validates :name, presence: true, uniqueness: true
 

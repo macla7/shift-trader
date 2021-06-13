@@ -9,16 +9,16 @@ RSpec.describe "posts/new", type: :view do
     ))
   end
 
-  it "renders new post form" do
-    render
-
-    assert_select "form[action=?][method=?]", posts_path, "post" do
-
-      assert_select "input[name=?]", "post[body]"
-
-      assert_select "input[name=?]", "post[user_group_id]"
-
-      assert_select "input[name=?]", "post[user_id]"
-    end
-  end
+  # it "renders new post form" do
+  #   render
+# 
+  #   assert_select "form[action=?][method=?]", posts_path, "post" do
+# 
+  #     assert_select "input[name=?]", "post[body]"
+# 
+  #     assert_select "input[name=?]", "post[user_group_id]"
+# 
+  #     assert_select "input[name=?]", "post[user_id]"
+  #   end
+  # end
 end
