@@ -47,6 +47,7 @@ Things you may want to cover:
     <li>I had too include this at top of rails_helper -> " require 'support/auth' " in order to load module I think.</li>
     <li> I had to include these two lines in the RSpec.configure block<br />include Warden::Test::Helpers<br />config.include Auth, type: :feature</li>
   </ul></li>
+  <li>Twiliio mock spec done using <a href="https://thoughtbot.com/blog/testing-sms-interactions">this</a>.</li>
 </ul>
 
 <h2>Current Problems to be fixed</h2>
@@ -60,7 +61,7 @@ Things you may want to cover:
       <li>Done - Features</li>
       <li>Presenters?</li>
       <li>Views</li>
-      <li>FINAL BOSS - Twilio sending phone</li>
+      <li>Done - Twilio sending phone</li>
       <li>Done - Omniauth</li>
     </ul>
   </li>

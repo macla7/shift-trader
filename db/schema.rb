@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_02_124303) do
+ActiveRecord::Schema.define(version: 2021_06_13_065820) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,17 @@ ActiveRecord::Schema.define(version: 2021_06_02_124303) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "accepted", default: false
     t.index ["invitor_id"], name: "index_invites_on_invitor_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.string "body"
+    t.datetime "time_end"
+    t.bigint "user_id", null: false
+    t.bigint "user_group_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_group_id"], name: "index_posts_on_user_group_id"
+    t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "requests", force: :cascade do |t|
@@ -85,5 +96,7 @@ ActiveRecord::Schema.define(version: 2021_06_02_124303) do
 
   add_foreign_key "identities", "users"
   add_foreign_key "invites", "users", column: "invitor_id"
+  add_foreign_key "posts", "user_groups"
+  add_foreign_key "posts", "users"
   add_foreign_key "requests", "users"
 end

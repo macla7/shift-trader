@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :posts
   resources :user_groups
   resources :invites
   root to: 'user_groups#index'
