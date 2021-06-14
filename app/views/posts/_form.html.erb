@@ -39,6 +39,16 @@
     <li>This then opens up nested(?) Auction form if needed</li>
   </ul>
 
+  <div>
+    <h3>Shift details</h3>
+    <%= f.fields_for :shift, Shift.new do |shift_attributes| %>
+      <%= shift_attributes.label :time_start, "Start time:"%>
+      <%= shift_attributes.datetime_select :time_start %>
+      <%= shift_attributes.label :time_end, "Finish time:"%>
+      <%= shift_attributes.datetime_select :time_end %>
+      <%= shift_attributes.label :position, "Position:" %>
+      <%= shift_attributes.text_field :position %>
+
   <div class="actions">
     <%= form.submit %>
   </div>

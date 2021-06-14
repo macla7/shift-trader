@@ -4,4 +4,6 @@ class Post < ApplicationRecord
 
   validates :user_id, presence: :true
   validates :user_group_id, presence: :true
+
+  accepts_nested_attributes_for :shift
 end

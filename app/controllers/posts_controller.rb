@@ -13,6 +13,7 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = Post.new
+    @post.build_shift
   end
 
   # GET /posts/1/edit
@@ -69,6 +70,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:body, :time_end, :user_group_id, :user_id)
+      params.require(:post).permit(:body, :time_end, :user_group_id, :user_id, shift_attributes: [:time_end, :time_start, :position])
     end
 end
